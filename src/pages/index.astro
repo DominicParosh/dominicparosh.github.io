@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Ask from '../components/Ask.astro';
 import Field from '../components/Field.astro';
+import { showTodos, isTodo } from '../lib/todo';
 import { experience, education, papers, profile, skills } from '../data/site';
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -33,7 +34,7 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
           <h3><a href={`/work/${w.id}/`}>{w.data.title}</a></h3>
           <p class="work-meta">{w.data.kind}, {w.data.where}. {w.data.stack.slice(0, 4).join(', ')}</p>
           <p class="work-summary">{w.data.summary}</p>
-          <p class="work-outcome"><Field value={w.data.outcome} /></p>
+          {(showTodos || !isTodo(w.data.outcome)) && <p class="work-outcome"><Field value={w.data.outcome} /></p>}
         </li>
       ))}
     </ul>

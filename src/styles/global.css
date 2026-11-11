@@ -198,6 +198,9 @@ h3 { font-size: var(--s1); font-weight: 600; }
 .case-body ul { padding-left: 1.1rem; }
 .case-body li + li { margin-top: 0.3rem; }
 
+/* A section whose body was only a placeholder disappears in the public build. */
+.case-body h2:has(+ h2), .case-body h2:last-child { display: none; }
+
 /* Archive ---------------------------------------------------------------- */
 .archive { list-style: none; margin: 0; padding: 0; }
 .archive li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.25rem 1rem; padding-block: 0.9rem; border-bottom: 1px solid var(--rule); }

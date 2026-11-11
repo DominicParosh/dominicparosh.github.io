@@ -1,4 +1,5 @@
 ---
-// Marks content Domi still needs to supply. `npm run check` counts these.
+// Marks content Domi still needs to supply. Hidden in the public build.
+import { showTodos } from '../lib/todo';
 ---
-<mark class="todo" data-todo><slot /></mark>
+{showTodos && <mark class="todo" data-todo><slot /></mark>}

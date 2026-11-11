@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Todo from '../../components/Todo.astro';
 import Field from '../../components/Field.astro';
+import { showTodos, isTodo } from '../../lib/todo';
 
 export async function getStaticPaths() {
   const work = await getCollection('work');
@@ -19,9 +20,9 @@ const d = entry.data;
     <h1>{d.title}</h1>
     <p class="lede">{d.summary}</p>
     <dl class="facts">
-      <div class="outcome"><dt>Outcome</dt><dd><Field value={d.outcome} /></dd></div>
-      <div><dt>My role</dt><dd><Field value={d.role} /></dd></div>
-      <div><dt>Where and when</dt><dd>{d.where}, <Field value={d.period} /></dd></div>
+      {(showTodos || !isTodo(d.outcome)) && <div class="outcome"><dt>Outcome</dt><dd><Field value={d.outcome} /></dd></div>}
+      {(showTodos || !isTodo(d.role)) && <div><dt>My role</dt><dd><Field value={d.role} /></dd></div>}
+      <div><dt>Where and when</dt><dd>{d.where}{(showTodos || !isTodo(d.period)) && <>, <Field value={d.period} /></>}</dd></div>
       <div><dt>Built with</dt><dd>{d.stack.join(', ')}</dd></div>
       {d.links.length > 0 && (
         <div><dt>Links</dt><dd>{d.links.map((l) => <a href={l.href}>{l.label}</a>)}</dd></div>

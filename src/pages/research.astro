@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Field from '../components/Field.astro';
 import { papers, interests } from '../data/site';
+import { showTodos } from '../lib/todo';
 ---
 <Base title="Research" description="Papers and research interests: calibrated abstention, RAG, knowledge graphs and multi-agent systems.">
   <header class="page-head">
@@ -38,10 +39,12 @@ import { papers, interests } from '../data/site';
     <ul class="plain">{interests.map((i) => <li>{i}</li>)}</ul>
   </section>
 
+  {showTodos && (
   <section class="section" aria-labelledby="open-h">
     <h2 id="open-h">Open questions</h2>
     <p class="prose-block">
       <mark class="todo" data-todo>Two or three questions you'd like to work on next, one sentence each. Useful for labs and PhD committees.</mark>
     </p>
   </section>
+  )}
 </Base>

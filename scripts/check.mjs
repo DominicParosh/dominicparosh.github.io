@@ -38,5 +38,7 @@ for (const f of files) {
       fail(`${f}: broken internal link ${href}`);
   }
 }
-console.log(`${files.length} pages checked, ${todos} TODO markers left to fill in.`);
+const empty = files.flatMap((f) => (readFileSync(f, 'utf8').match(/<p[^>]*>\s*<\/p>/g) || []).map(() => f));
+if (empty.length) fail(`empty paragraphs in: ${[...new Set(empty)].join(', ')}`);
+console.log(`${files.length} pages checked, ${todos} placeholders visible (expect 0 in the public build).`);
 process.exit(failures ? 1 : 0);
