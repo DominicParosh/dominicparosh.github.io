@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Ask from '../components/Ask.astro';
 import Field from '../components/Field.astro';
-import { experience, education, papers, profile } from '../data/site';
+import { experience, education, papers, profile, skills } from '../data/site';
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -13,13 +13,13 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
       <p class="hero-name">{profile.name}, {profile.role}</p>
       <h1>I build LLM systems that know when they're wrong.</h1>
       <p class="hero-lede">
-        I've shipped machine learning to production since 2018. At Verizon I build agentic and RAG
-        systems with the evaluation built in from the start: golden datasets, regression checks,
-        and grounding that holds up when subject-matter experts review the output.
+        I've built machine learning systems since 2018. At Verizon I engineered GenTaaS, an AI
+        testing platform that cut test-case turnaround by about 40%, with evaluation built in from
+        the start: LLM-as-a-judge scoring, golden datasets and review by subject-matter experts.
       </p>
       <p class="hero-lede">
-        In research I work on calibrated abstention: getting models to decline when the evidence
-        isn't there, instead of guessing.
+        In research I work on evidence-grounded extraction: every fact a model pulls out should
+        come with its evidence, and when there isn't any, the model should decline.
       </p>
     </div>
     <Ask />
@@ -47,7 +47,7 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
           <li><Field value={p.title} /> <span class="entry-meta">({p.venue})</span></li>
         ))}
       </ul>
-      <p><a href="/research/">Papers, research interests and open questions</a></p>
+      <p><a href="/research/">Publications, research projects and interests</a></p>
     </div>
   </section>
 
@@ -56,8 +56,8 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
     <div class="entries">
       {experience.map((e) => (
         <article class="entry">
-          <h3>{e.title}, {e.org}</h3>
-          <p class="entry-meta">{e.period}, {e.place}</p>
+          <h3>{e.title}</h3>
+          <p class="entry-meta">{e.org}, {e.place}. {e.period}</p>
           <ul>{e.points.map((pt) => <li>{pt}</li>)}</ul>
         </article>
       ))}
@@ -68,6 +68,13 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
         </ul>
       </article>
     </div>
+  </section>
+
+  <section class="section" id="skills" aria-labelledby="skills-h">
+    <h2 id="skills-h">Tools</h2>
+    <dl class="skills">
+      {skills.map((g) => (<div><dt>{g.group}</dt><dd>{g.items}</dd></div>))}
+    </dl>
   </section>
 
   <section class="section" aria-labelledby="more-h">

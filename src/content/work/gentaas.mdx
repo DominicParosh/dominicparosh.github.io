@@ -1,46 +1,55 @@
 ---
 title: GenTaaS
-summary: Generative testing as a service. Requirements go in; test cases and executable test scripts come out.
-outcome: 95% agreement with subject-matter experts, 75% lower cost, about 40% less manual QA effort.
+summary: An AI testing platform at Verizon. Requirements go in; validated test cases and execution-ready scripts come out.
+outcome: About 40% faster test-case turnaround; evaluations reported about 95% alignment with SME reviews.
 kind: Production
 where: Verizon
-period: 2025 – now
-role: TODO — your role (designed / led / built which parts)
-stack: [LangGraph, RAG on OpenSearch, Kafka, FastAPI, Kubernetes, AWS]
+period: 2025 – 2026
+role: Engineer on the platform — retrieval, agent workflows, integrations and the evaluation framework
+stack: [Python, FastAPI, LangGraph, LangChain, OpenSearch, AWS]
 order: 1
 ---
 
 ## The problem
 
-QA teams wrote test cases by hand from long requirement documents. <Todo>How many teams or requirements per month, and how long one cycle took before GenTaaS.</Todo>
+QA teams wrote test cases by hand from enterprise requirements, then moved them by hand through Jira, qTest and execution tooling. <Todo>How many teams or requirements per month, and how long one cycle took before GenTaaS.</Todo>
 
-## Constraints
+## Retrieval
 
-- Generated tests had to be executable, not just plausible text.
-- Requirements and internal systems are confidential, so <Todo>which model hosting constraints applied.</Todo>
-- <Todo>Latency or throughput targets.</Todo>
+Good test cases depend on the right context, and enterprise requirements are spread across many sources. The RAG layer combines **OpenSearch vector retrieval with BM25 keyword matching**, metadata filtering, and **multi-index routing** that sends each query to the indexes most likely to hold relevant context.
 
-## Approach
+## Agent workflow
 
-An agent-style pipeline: **plan → generate structured output → validate → produce execution-ready artifacts.** Retrieval over OpenSearch grounds each step in the relevant requirement and existing test assets, and Kafka carries work between stages.
+The generation pipeline is a LangGraph graph with specialised stages: **generate → critique → validate → execute.** Conditional routing sends weak output back for revision, failed tool calls retry, and a **human-in-the-loop approval** step sits before anything reaches downstream systems.
 
-<Todo>Architecture diagram (boxes for ingestion, retrieval, planner, generator, validator, executor, eval harness).</Todo>
+<Todo>Architecture diagram: requirement sources, hybrid retrieval, the four agent stages, approval, and the Jira / qTest / Tapsium / GitLab integrations.</Todo>
+
+## Integrations
+
+20+ REST endpoints connect the LLM services to **Jira, qTest, Tapsium, GitLab** and internal applications, so generated tests flow into validation and execution without copy-and-paste.
 
 ## How it was evaluated
 
-The evaluation framework came before scaling: scorecards for **correctness, coverage and diversity**, golden datasets reviewed by SMEs, and automated regression detection on every prompt or model change. <Todo>Size of the golden set, how SME agreement was measured, the regression threshold.</Todo>
+An **LLM-as-a-judge** framework compares each generated test case with a reference scenario. It returns criterion-level scores, an overall score and a written rationale, and runs repeatedly to measure **consistency across runs**, so a single lucky sample can't pass as quality.
+
+Around it: golden datasets, SME reviews, correctness checks, semantic-similarity scoring and prompt regression tests on every change. Project assessments reported about **95% alignment with SME evaluations**.
+
+<Todo>Size of the golden set and how agreement with SMEs was calculated.</Todo>
+
+## Running it in production
+
+Structured logging, request tracing, latency monitoring and **token-cost tracking** made failures diagnosable and showed where cost and latency went.
 
 ## Results
 
-- 95% alignment with SME-written tests <Todo>(measured how, on what sample)</Todo>
-- 75% cost reduction <Todo>(compared with what baseline)</Todo>
-- P95 latency of 10 ms <Todo>(for which component; retrieval?)</Todo>
-- About 40% less manual QA effort
+- About **40% faster** test-case turnaround
+- About **95% alignment** with SME evaluations
+- 20+ integration endpoints in use across QA workflows
 
 ## What didn't work
 
-<Todo>One or two things you tried and dropped, and why. This is the section senior reviewers read most closely.</Todo>
+<Todo>One or two approaches you tried and dropped, and why. Senior reviewers read this section most closely.</Todo>
 
 ## Trade-offs
 
-<Todo>For example: strict schema validation vs. generation flexibility; cost vs. model size.</Todo>
+<Todo>For example: how strict validation should be vs. letting the generator be creative; when to ask a human vs. retry automatically.</Todo>

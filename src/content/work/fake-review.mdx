@@ -1,0 +1,29 @@
+---
+title: Multimodal fake review detection
+summary: Detecting deceptive reviews by combining what a review says with what its images show.
+outcome: TODO — headline result (e.g. F1 of the fused model vs. text-only)
+kind: Research
+where: University at Buffalo
+period: 2024 – 2025
+role: Research assistant
+stack: [PyTorch, Hugging Face Transformers, RoBERTa, CLIP]
+order: 4
+links:
+  - { label: Code, href: 'https://github.com/DominicParosh/Multimodal-Fake-Review-Detection' }
+---
+
+## The question
+
+Fake reviews increasingly pair plausible text with stock or recycled images. Does looking at both catch what text alone misses?
+
+## Approach
+
+Transformer text representations (RoBERTa) and visual features (CLIP) are combined with **cross-modal attention fusion**, then classified. Real and synthetic review datasets were prepared for training and testing.
+
+## Evaluation
+
+Models were compared on the same splits, with analysis of representation quality and of the reviews each model got wrong. <Todo>Datasets, metrics and the comparison table.</Todo>
+
+## What didn't work
+
+<Todo>For example: simple concatenation of text and image features vs. attention fusion.</Todo>

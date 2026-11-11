@@ -7,15 +7,16 @@ import { profile } from '../data/site';
 interface Props { title?: string; description?: string }
 const {
   title,
-  description = 'Senior GenAI engineer building LLM systems that know when they are wrong: evaluation, grounding and calibrated abstention, in production and research.',
+  description = 'Generative AI engineer building LLM systems that know when they are wrong: hybrid retrieval, agent workflows, evaluation and evidence-grounded extraction.',
 } = Astro.props;
-const fullTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Senior GenAI Engineer`;
+const fullTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Generative AI Engineer`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
 const nav = [
   { href: '/#work', label: 'Work' },
   { href: '/research/', label: 'Research' },
   { href: '/#experience', label: 'Experience' },
+  { href: '/#skills', label: 'Tools' },
   { href: '/archive/', label: 'Archive' },
 ];
 ---

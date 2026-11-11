@@ -1,31 +1,34 @@
 ---
-title: Order Analyzer Remediator
-summary: A multi-agent system that triages failed orders, finds the likely cause and proposes a fix.
-outcome: TODO — headline outcome (time to triage, tickets auto-resolved, accuracy)
+title: Order Analyzer and Remediator
+summary: An agent system that investigates operational failures from logs and recommends controlled corrective actions.
+outcome: TODO — headline outcome (time to diagnose, incidents handled, accuracy of root cause)
 kind: Production
 where: Verizon
-period: TODO
-role: TODO
-stack: [LangGraph, MCP, Python]
+period: 2025 – 2026
+role: Contributor
+stack: [Python, Elasticsearch, LangGraph, MCP]
 order: 2
 ---
 
 ## The problem
 
-When an order fails in fulfilment, someone has to work out where and why across several systems. <Todo>Volume of failures, how long manual triage took, who did it.</Todo>
+When an order fails, engineers have to search logs across systems to find out where and why, then decide on a fix. <Todo>Volume of failures and how long manual investigation took.</Todo>
 
 ## Approach
 
-Specialised agents coordinated with LangGraph, each reaching internal systems through MCP tools. <Todo>Which agents (e.g. classifier, investigator, remediator), and where a human approves before any change.</Todo>
+Elasticsearch log retrieval feeds a set of agents, each with one job:
+
+- **Monitoring** spots the failure.
+- **Analysis** traces it through the logs to a likely cause.
+- **Remediation** recommends a corrective action, kept *controlled*: it proposes, people approve.
+- **Postmortem** writes up what happened.
+
+<Todo>Which parts you built, and where the human approval sits.</Todo>
 
 ## How it was evaluated
 
-<Todo>Labelled past incidents? Agreement with the ops team's root cause? Safety checks on proposed fixes?</Todo>
-
-## Results
-
-<Todo>Numbers with baselines.</Todo>
+<Todo>For example: agreement with the ops team's root cause on past incidents, and checks that proposed fixes are safe.</Todo>
 
 ## What didn't work
 
-<Todo>For example: a single-agent version, tool-call loops, ambiguous MCP tool descriptions.</Todo>
+<Todo>For example: one agent doing everything, noisy log retrieval, tool-call loops.</Todo>

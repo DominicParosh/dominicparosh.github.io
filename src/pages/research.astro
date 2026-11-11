@@ -7,23 +7,30 @@ import { papers, interests } from '../data/site';
   <header class="page-head">
     <h1>Research</h1>
     <p>
-      One thread runs through my research and my production work: a system should know the limits
-      of its evidence and say so.
+      One thread runs through my research and my production work: a system should show the
+      evidence for what it says, and decline when it has none.
     </p>
   </header>
 
   <section class="section" aria-labelledby="papers-h">
-    <h2 id="papers-h">Papers</h2>
+    <h2 id="papers-h">Publications</h2>
     <div class="entries">
       {papers.map((p) => (
         <article class="entry">
           <h3><Field value={p.title} /></h3>
           <p class="entry-meta">{p.authors} {p.venue}.</p>
-          <p class="prose-block"><mark class="todo" data-todo>{p.note}</mark></p>
           {p.links.length > 0 && <p class="entry-meta">{p.links.map((l) => <a href={l.href}>{l.label}</a>)}</p>}
         </article>
       ))}
     </div>
+  </section>
+
+  <section class="section" aria-labelledby="projects-h">
+    <h2 id="projects-h">Projects</h2>
+    <ul class="plain">
+      <li><a href="/work/evidence-grounded-kg/">Evidence-grounded knowledge graph extraction</a></li>
+      <li><a href="/work/fake-review/">Multimodal fake review detection</a></li>
+    </ul>
   </section>
 
   <section class="section" aria-labelledby="interests-h">

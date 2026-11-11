@@ -15,10 +15,17 @@ let failures = 0;
 const fail = (m) => { failures++; console.error('FAIL', m); };
 
 const home = readFileSync(join(dist, 'index.html'), 'utf8');
-for (const must of ['know when they', 'GenTaaS', 'EGR-SRC', 'Verizon', 'not going to guess']) {
+for (const must of ['know when they', 'GenTaaS', 'Evidence-grounded', 'Verizon', 'not going to guess', '40%']) {
   if (!home.includes(must)) fail(`home page HTML is missing "${must}"`);
 }
 if (/<div[^>]*data-panel[^>]*hidden/.test(home)) fail('Ask panels are hidden in static HTML');
+// Figures removed from the résumé must not reappear on the site.
+for (const f of files) {
+  const html = readFileSync(f, 'utf8');
+  for (const stale of ['75%', '10 ms', '10ms', 'Senior Generative', 'JNTU', 'NLDM']) {
+    if (html.includes(stale)) fail(`${f}: contains "${stale}", which the résumé no longer supports`);
+  }
+}
 
 let todos = 0;
 for (const f of files) {

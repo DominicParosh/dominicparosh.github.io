@@ -1,0 +1,39 @@
+---
+title: Evidence-grounded knowledge graph extraction
+summary: Extracting entities and relations from documents together with the evidence for each, and abstaining when the evidence isn't there.
+outcome: TODO — headline result (e.g. fewer unsupported relations at a given coverage, vs. the baseline)
+kind: Research
+where: Independent research (EGR-SRC)
+period: TODO
+role: Author
+stack: [Python, LLMs, Neo4j, Platt scaling]
+order: 3
+---
+
+## The question
+
+Extraction models produce a relation for every input, even when the text doesn't support it. Once those relations land in a knowledge graph, nobody can tell which edges are real. Can a system attach evidence to every relation it extracts, and decline when it has none?
+
+## Approach
+
+Three stages: **generate → verify → abstain.** A generator proposes entities and relations; a verifier checks each against the source text; Platt scaling turns verifier scores into calibrated probabilities, and below a threshold the relation is dropped instead of guessed.
+
+Every kept relation stores its **provenance**, the source passage that supports it, so the graph in Neo4j stays auditable.
+
+<Todo>Diagram of the three stages and the graph schema.</Todo>
+
+## GraphRAG
+
+The same graph serves retrieval: answers combine entity relationships with the source passages behind them, so each response can point to its evidence.
+
+## Evaluation
+
+<Todo>Datasets, baselines and metrics (e.g. precision and coverage, calibration error), and the main table.</Todo>
+
+## What didn't work
+
+<Todo>For example: raw model confidence without calibration, verifier over-confidence on long passages.</Todo>
+
+## Why it matters beyond research
+
+The same idea runs through the production work: the cheapest wrong answer is the one the system declines to give.

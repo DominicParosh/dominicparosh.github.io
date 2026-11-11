@@ -176,6 +176,11 @@ h3 { font-size: var(--s1); font-weight: 600; }
 .plain li + li { margin-top: 0.35rem; }
 .prose-block { max-width: var(--measure); margin: 0; }
 
+/* Tools */
+.skills { margin: 0; display: grid; gap: 1rem; max-width: var(--measure); }
+.skills dt { font-family: var(--sans); font-weight: 600; font-size: var(--s-1); }
+.skills dd { margin: 0.15rem 0 0; }
+
 /* Case study ------------------------------------------------------------ */
 .case-head { padding-block: 3rem 2rem; border-bottom: 1px solid var(--rule); }
 .case-head .back { font-family: var(--sans); font-size: var(--s-1); }
