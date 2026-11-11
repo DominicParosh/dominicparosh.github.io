@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Field from '../components/Field.astro';
+import { papers, interests } from '../data/site';
+---
+<Base title="Research" description="Papers and research interests: calibrated abstention, RAG, knowledge graphs and multi-agent systems.">
+  <header class="page-head">
+    <h1>Research</h1>
+    <p>
+      One thread runs through my research and my production work: a system should know the limits
+      of its evidence and say so.
+    </p>
+  </header>
+
+  <section class="section" aria-labelledby="papers-h">
+    <h2 id="papers-h">Papers</h2>
+    <div class="entries">
+      {papers.map((p) => (
+        <article class="entry">
+          <h3><Field value={p.title} /></h3>
+          <p class="entry-meta">{p.authors} {p.venue}.</p>
+          <p class="prose-block"><mark class="todo" data-todo>{p.note}</mark></p>
+          {p.links.length > 0 && <p class="entry-meta">{p.links.map((l) => <a href={l.href}>{l.label}</a>)}</p>}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="interests-h">
+    <h2 id="interests-h">Interests</h2>
+    <ul class="plain">{interests.map((i) => <li>{i}</li>)}</ul>
+  </section>
+
+  <section class="section" aria-labelledby="open-h">
+    <h2 id="open-h">Open questions</h2>
+    <p class="prose-block">
+      <mark class="todo" data-todo>Two or three questions you'd like to work on next, one sentence each. Useful for labs and PhD committees.</mark>
+    </p>
+  </section>
+</Base>

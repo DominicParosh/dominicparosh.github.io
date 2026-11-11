@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dominicparosh.github.io/sitemap-index.xml

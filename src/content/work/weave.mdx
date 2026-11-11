@@ -1,0 +1,25 @@
+---
+title: weave
+summary: A small language, compiler and interpreter for AI programs — LLM calls, tools and control flow in one place.
+outcome: Parser, IR, interpreter, type system and diagnostics working; structured generation in progress.
+kind: Independent
+where: Open source
+period: 2026 – now
+role: Author
+stack: [Python, Compiler design]
+order: 5
+links:
+  - { label: Code, href: 'https://github.com/DominicParosh/weave' }
+---
+
+## The idea
+
+Today, structured generation, agent-graph optimisation and prompt optimisation live in separate frameworks. weave treats them as three optimisation passes over one shared intermediate representation. The compiler analyses and optimises the program statically; the interpreter runs the plan against live models.
+
+## Status
+
+- Phase 0, done: parser → IR → interpreter
+- Phase 1, done: type system and diagnostics
+- Phase 2, in progress: structured generation
+
+<Todo>A 10-line weave program and what the compiler does with it.</Todo>

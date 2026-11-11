@@ -1,0 +1,6 @@
+---
+// Renders a frontmatter string, highlighting it if it is still a TODO.
+const { value } = Astro.props as { value: string };
+const todo = value.startsWith('TODO');
+---
+{todo ? <mark class="todo" data-todo>{value.replace(/^TODO[\s:—-]*/, '')}</mark> : value}

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import { archive, profile } from '../data/site';
+---
+<Base title="Archive" description="Smaller projects and experiments.">
+  <header class="page-head">
+    <h1>Archive</h1>
+    <p>Smaller projects, experiments and things built to learn. The selected work is on the <a href="/#work">home page</a>.</p>
+  </header>
+  <ul class="archive">
+    {archive.map((r) => (
+      <li>
+        <a href={`${profile.github}/${r.name}`}>{r.name}</a>
+        <span class="tag">{r.tag}</span>
+        <p>{r.desc}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

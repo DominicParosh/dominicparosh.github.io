@@ -1,0 +1,79 @@
+---
+import { questions, threshold } from '../data/site';
+const pct = (n: number) => `${Math.round(n * 100)}%`;
+---
+<section class="ask" aria-labelledby="ask-title">
+  <h2 id="ask-title" class="ask-title">Ask this page</h2>
+  <p class="ask-note">
+    A scripted demo of the pattern I build: answers come only from this site, and anything below
+    {Math.round(threshold * 100)}% confidence gets declined instead of guessed.
+  </p>
+
+  <div class="ask-questions" role="tablist" aria-label="Questions">
+    {questions.map((item, i) => (
+      <button
+        role="tab"
+        id={`q-${i}`}
+        aria-controls={`a-${i}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        tabindex={i === 0 ? 0 : -1}
+      >{item.q}</button>
+    ))}
+  </div>
+
+  {questions.map((item, i) => {
+    const answered = item.confidence >= threshold;
+    return (
+      <div
+        class:list={['ask-answer', answered ? 'is-answered' : 'is-declined']}
+        role="tabpanel"
+        id={`a-${i}`}
+        aria-labelledby={`q-${i}`}
+        data-panel
+      >
+        <p class="ask-q">{item.q}</p>
+        <p class="ask-a">{item.a}</p>
+        <div class="meter" style={`--c:${item.confidence};--t:${threshold}`}>
+          <div class="meter-track" aria-hidden="true"><span class="meter-fill"></span><span class="meter-threshold"></span></div>
+          <p class="meter-label">
+            {answered ? 'Answered' : 'Declined'} at {pct(item.confidence)} confidence (threshold {pct(threshold)})
+          </p>
+        </div>
+        {item.sources.length > 0 && (
+          <p class="ask-sources">
+            Sources: {item.sources.map((s, j) => (<><a href={s.href}>{s.label}</a>{j < item.sources.length - 1 ? ', ' : ''}</>))}
+          </p>
+        )}
+      </div>
+    );
+  })}
+</section>
+
+<script>
+  // Without JS every panel is visible; with JS, the tabs switch between them.
+  const root = document.querySelector('.ask');
+  if (root) {
+    root.classList.add('is-enhanced');
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    const select = (i: number) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+      });
+      panels.forEach((p, j) => (p.hidden = i !== j));
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        const n = (i + d + tabs.length) % tabs.length;
+        select(n);
+        tabs[n].focus();
+      });
+    });
+    select(0);
+  }
+</script>

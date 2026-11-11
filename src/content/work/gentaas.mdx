@@ -1,0 +1,46 @@
+---
+title: GenTaaS
+summary: Generative testing as a service. Requirements go in; test cases and executable test scripts come out.
+outcome: 95% agreement with subject-matter experts, 75% lower cost, about 40% less manual QA effort.
+kind: Production
+where: Verizon
+period: 2025 – now
+role: TODO — your role (designed / led / built which parts)
+stack: [LangGraph, RAG on OpenSearch, Kafka, FastAPI, Kubernetes, AWS]
+order: 1
+---
+
+## The problem
+
+QA teams wrote test cases by hand from long requirement documents. <Todo>How many teams or requirements per month, and how long one cycle took before GenTaaS.</Todo>
+
+## Constraints
+
+- Generated tests had to be executable, not just plausible text.
+- Requirements and internal systems are confidential, so <Todo>which model hosting constraints applied.</Todo>
+- <Todo>Latency or throughput targets.</Todo>
+
+## Approach
+
+An agent-style pipeline: **plan → generate structured output → validate → produce execution-ready artifacts.** Retrieval over OpenSearch grounds each step in the relevant requirement and existing test assets, and Kafka carries work between stages.
+
+<Todo>Architecture diagram (boxes for ingestion, retrieval, planner, generator, validator, executor, eval harness).</Todo>
+
+## How it was evaluated
+
+The evaluation framework came before scaling: scorecards for **correctness, coverage and diversity**, golden datasets reviewed by SMEs, and automated regression detection on every prompt or model change. <Todo>Size of the golden set, how SME agreement was measured, the regression threshold.</Todo>
+
+## Results
+
+- 95% alignment with SME-written tests <Todo>(measured how, on what sample)</Todo>
+- 75% cost reduction <Todo>(compared with what baseline)</Todo>
+- P95 latency of 10 ms <Todo>(for which component; retrieval?)</Todo>
+- About 40% less manual QA effort
+
+## What didn't work
+
+<Todo>One or two things you tried and dropped, and why. This is the section senior reviewers read most closely.</Todo>
+
+## Trade-offs
+
+<Todo>For example: strict schema validation vs. generation flexibility; cost vs. model size.</Todo>

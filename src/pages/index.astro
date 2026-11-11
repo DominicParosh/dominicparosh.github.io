@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Ask from '../components/Ask.astro';
+import Field from '../components/Field.astro';
+import { experience, education, papers, profile } from '../data/site';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base>
+  <section class="hero">
+    <div>
+      <p class="hero-name">{profile.name}, {profile.role}</p>
+      <h1>I build LLM systems that know when they're wrong.</h1>
+      <p class="hero-lede">
+        I've shipped machine learning to production since 2018. At Verizon I build agentic and RAG
+        systems with the evaluation built in from the start: golden datasets, regression checks,
+        and grounding that holds up when subject-matter experts review the output.
+      </p>
+      <p class="hero-lede">
+        In research I work on calibrated abstention: getting models to decline when the evidence
+        isn't there, instead of guessing.
+      </p>
+    </div>
+    <Ask />
+  </section>
+
+  <section class="section" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Selected work</h2>
+    <ul class="work-list">
+      {work.map((w) => (
+        <li class="work-item">
+          <h3><a href={`/work/${w.id}/`}>{w.data.title}</a></h3>
+          <p class="work-meta">{w.data.kind}, {w.data.where}. {w.data.stack.slice(0, 4).join(', ')}</p>
+          <p class="work-summary">{w.data.summary}</p>
+          <p class="work-outcome"><Field value={w.data.outcome} /></p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="research-h">
+    <h2 id="research-h">Research</h2>
+    <div>
+      <ul class="plain">
+        {papers.map((p) => (
+          <li><Field value={p.title} /> <span class="entry-meta">({p.venue})</span></li>
+        ))}
+      </ul>
+      <p><a href="/research/">Papers, research interests and open questions</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="experience" aria-labelledby="exp-h">
+    <h2 id="exp-h">Experience</h2>
+    <div class="entries">
+      {experience.map((e) => (
+        <article class="entry">
+          <h3>{e.title}, {e.org}</h3>
+          <p class="entry-meta">{e.period}, {e.place}</p>
+          <ul>{e.points.map((pt) => <li>{pt}</li>)}</ul>
+        </article>
+      ))}
+      <article class="entry">
+        <h3>Education</h3>
+        <ul class="plain">
+          {education.map((ed) => <li>{ed.degree}, {ed.school} <span class="entry-meta">({ed.period})</span></li>)}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="more-h">
+    <h2 id="more-h">Everything else</h2>
+    <p class="prose-block">
+      Twenty-odd smaller repositories, from RAG experiments to a GPT written from scratch, are in
+      the <a href="/archive/">archive</a>.
+    </p>
+  </section>
+</Base>

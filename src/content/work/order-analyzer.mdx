@@ -1,0 +1,31 @@
+---
+title: Order Analyzer Remediator
+summary: A multi-agent system that triages failed orders, finds the likely cause and proposes a fix.
+outcome: TODO — headline outcome (time to triage, tickets auto-resolved, accuracy)
+kind: Production
+where: Verizon
+period: TODO
+role: TODO
+stack: [LangGraph, MCP, Python]
+order: 2
+---
+
+## The problem
+
+When an order fails in fulfilment, someone has to work out where and why across several systems. <Todo>Volume of failures, how long manual triage took, who did it.</Todo>
+
+## Approach
+
+Specialised agents coordinated with LangGraph, each reaching internal systems through MCP tools. <Todo>Which agents (e.g. classifier, investigator, remediator), and where a human approves before any change.</Todo>
+
+## How it was evaluated
+
+<Todo>Labelled past incidents? Agreement with the ops team's root cause? Safety checks on proposed fixes?</Todo>
+
+## Results
+
+<Todo>Numbers with baselines.</Todo>
+
+## What didn't work
+
+<Todo>For example: a single-agent version, tool-call loops, ambiguous MCP tool descriptions.</Todo>
